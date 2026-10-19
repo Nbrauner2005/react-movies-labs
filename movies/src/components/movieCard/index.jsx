@@ -42,7 +42,7 @@ export default function MovieCard({ movie, action }) {
         }
         title={
           <Typography variant="h5" component="p">
-            {movie.title}{" "}
+            {movie.title}
           </Typography>
         }
       />
@@ -68,25 +68,20 @@ export default function MovieCard({ movie, action }) {
           <Grid size={{ xs: 6 }}>
             <Typography variant="h6" component="p">
               <StarRateIcon fontSize="small" />
-              {"  "} {movie.vote_average}{" "}
+              {"  "} {movie.vote_average}
             </Typography>
           </Grid>
         </Grid>
       </CardContent>
 
       <CardActions disableSpacing>
-              <CardActions disableSpacing>
-      
         {action(movie)}
-      
+
         <Link to={`/movies/${movie.id}`}>
           <Button variant="outlined" size="medium" color="primary">
             More Info ...
           </Button>
         </Link>
-        
-      </CardActions>
-
       </CardActions>
     </Card>
   );
