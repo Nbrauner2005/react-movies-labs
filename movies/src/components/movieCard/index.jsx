@@ -11,23 +11,32 @@ import CalendarIcon from "@mui/icons-material/CalendarTodayTwoTone";
 import StarRateIcon from "@mui/icons-material/StarRate";
 import IconButton from "@mui/material/IconButton";
 import Grid from "@mui/material/Grid";
-import img from '../../images/film-poster-placeholder.png'
+import img from "../../images/film-poster-placeholder.png";
 import { Link } from "react-router";
-import Avatar from '@mui/material/Avatar';
+import Avatar from "@mui/material/Avatar";
+import { useContext } from "react";
+import { MoviesContext } from "../../contexts/moviesContext";
 
-export default function MovieCard(props) {
-  const movie = props.movie;
+export default function MovieCard({ movie }) {
+  const { favorites, addToFavorites } = useContext(MoviesContext);
+
+  if (favorites.find((id) => id === movie.id)) {
+    movie.favorite = true;
+  } else {
+    movie.favorite = false;
+  }
+
   const handleAddToFavorite = (e) => {
     e.preventDefault();
-    props.selectFavorite(movie.id);
+    addToFavorites(movie);
   };
 
   return (
     <Card>
-            <CardHeader
+      <CardHeader
         avatar={
           movie.favorite ? (
-            <Avatar sx={{ backgroundColor: 'red' }}>
+            <Avatar sx={{ backgroundColor: "red" }}>
               <FavoriteIcon />
             </Avatar>
           ) : null
@@ -47,15 +56,17 @@ export default function MovieCard(props) {
             : img
         }
       />
+
       <CardContent>
         <Grid container>
-          <Grid size={{xs: 6}}>
+          <Grid size={{ xs: 6 }}>
             <Typography variant="h6" component="p">
               <CalendarIcon fontSize="small" />
               {movie.release_date}
             </Typography>
           </Grid>
-          <Grid size={{xs: 6}}>
+
+          <Grid size={{ xs: 6 }}>
             <Typography variant="h6" component="p">
               <StarRateIcon fontSize="small" />
               {"  "} {movie.vote_average}{" "}
@@ -63,14 +74,23 @@ export default function MovieCard(props) {
           </Grid>
         </Grid>
       </CardContent>
+
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites" onClick={handleAddToFavorite}>
+        <IconButton
+          aria-label="add to favorites"
+          onClick={handleAddToFavorite}
+        >
           <FavoriteIcon color="primary" fontSize="large" />
         </IconButton>
-         <Link to={`/movies/${movie.id}`}>
-        <Button variant="outlined" size="medium" color="primary">
-          More Info ...
-        </Button>
+
+        <Link to={`/movies/${movie.id}`}>
+          <Button
+            variant="outlined"
+            size="medium"
+            color="primary"
+          >
+            More Info ...
+          </Button>
         </Link>
       </CardActions>
     </Card>
