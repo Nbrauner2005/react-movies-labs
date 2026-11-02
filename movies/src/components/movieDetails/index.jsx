@@ -9,6 +9,7 @@ import Fab from "@mui/material/Fab";
 import Typography from "@mui/material/Typography";
 import Drawer from "@mui/material/Drawer";
 import MovieReviews from "../movieReviews"
+import PlaylistAdd from "../cardIcons/playlistAdd";
 
 const root = {
     display: "flex",
@@ -33,6 +34,8 @@ const [drawerOpen, setDrawerOpen] = useState(false);
       <Typography variant="h6" component="p">
         {movie.overview}
       </Typography>
+
+      <PlaylistAdd movie={movie} />
 
       <Paper 
         component="ul" 

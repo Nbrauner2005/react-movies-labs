@@ -1,11 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 export const MoviesContext = React.createContext(null);
 
 const MoviesContextProvider = (props) => {
   const [favorites, setFavorites] = useState([]);
 
-  const [mustWatch, setMustWatch] = useState([]);
+  const [mustWatch, setMustWatch] = useState(() => {
+  const savedWatchlist = localStorage.getItem("mustWatch");
+  return savedWatchlist ? JSON.parse(savedWatchlist) : [];
+});
 
   const addToFavorites = (movie) => {
     let newFavorites = [];
@@ -39,6 +42,15 @@ const MoviesContextProvider = (props) => {
     console.log(newMustWatch);
   };
 
+  const removeFromMustWatch = (movie) => {
+    setMustWatch(
+      mustWatch.filter((mId) => mId !== movie.id)
+    );
+  };
+
+  useEffect(() => {
+  localStorage.setItem("mustWatch", JSON.stringify(mustWatch));
+  }, [mustWatch]);
   return (
     <MoviesContext.Provider
       value={{
@@ -47,6 +59,7 @@ const MoviesContextProvider = (props) => {
         removeFromFavorites,
         mustWatch,
         addToMustWatch,
+        removeFromMustWatch,
       }}
     >
       {props.children}
