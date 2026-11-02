@@ -53,6 +53,9 @@ const handleGenreChange = (e) => {
   handleChange(e, "genre", e.target.value);
 };
 
+const handleSortChange = (e) => {
+  handleChange(e, "sort", e.target.value);
+};
 
   return (
     <Card 
@@ -90,6 +93,22 @@ const handleGenreChange = (e) => {
                 </MenuItem>
               );
             })}
+          </Select>
+        </FormControl>
+
+        <FormControl sx={{ ...formControl }}>
+          <InputLabel id="sort-label">Sort By</InputLabel>
+          <Select
+          labelId="sort-label"
+          id="sort-select"
+          value={props.sortOption}
+          label="Sort By"
+          onChange={handleSortChange}
+          >
+            <MenuItem value="default">Default</MenuItem>
+            <MenuItem value="rating">Highest Rated</MenuItem>
+            <MenuItem value="newest">Newest Releases</MenuItem>
+            <MenuItem value="title">Title (A-Z)</MenuItem>
           </Select>
         </FormControl>
       </CardContent>
