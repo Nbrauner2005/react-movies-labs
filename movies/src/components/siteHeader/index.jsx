@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
@@ -8,7 +7,7 @@ import Button from "@mui/material/Button";
 import MenuIcon from "@mui/icons-material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import { useNavigate } from "react-router";
+import { useNavigate, useLocation } from "react-router";
 import { styled } from "@mui/material/styles";
 import { useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -20,9 +19,10 @@ const SiteHeader = () => {
   const open = Boolean(anchorEl);
 
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isMobile = useMediaQuery(theme.breakpoints.down("lg"));
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   const menuOptions = [
     { label: "Home", path: "/" },
@@ -44,14 +44,24 @@ const SiteHeader = () => {
 
   return (
     <>
-      <AppBar position="fixed" color="secondary">
+      <AppBar
+       position="fixed" 
+       sx={{
+        backgroundColor: "#1e1e2f",
+        boxShadow: "0 3px 12px rgba(0, 0, 0, 0.2)",
+       }}
+       >
         <Toolbar>
-          <Typography variant="h4" sx={{ flexGrow: 1 }}>
+          <Typography
+           variant="h5"
+            sx={{ 
+              fontWeight: 700,
+              letterSpacing: 0.5,
+              flexGrow: 1,
+              whiteSpace: "nowrap",
+              }}
+              >
             TMDB Client
-          </Typography>
-
-          <Typography variant="h6" sx={{ flexGrow: 1 }}>
-            All you ever wanted to know about Movies!
           </Typography>
 
           {isMobile ? (
@@ -93,15 +103,34 @@ const SiteHeader = () => {
             </>
           ) : (
             <>
-              {menuOptions.map((opt) => (
-                <Button
-                  key={opt.label}
-                  color="inherit"
-                  onClick={() => handleMenuSelect(opt.path)}
-                >
-                  {opt.label}
-                </Button>
-              ))}
+              {menuOptions.map((opt) => {
+  const isActive = location.pathname === opt.path;
+
+  return (
+    <Button
+      key={opt.label}
+      color="inherit"
+      onClick={() => handleMenuSelect(opt.path)}
+      sx={{
+        fontSize: "0.8rem",
+        fontWeight: isActive ? 700 : 500,
+        textTransform: "none",
+        whiteSpace: "nowrap",
+        borderRadius: 2,
+        mx: 0.3,
+        px: 1.5,
+        backgroundColor: isActive
+          ? "rgba(255, 255, 255, 0.15)"
+          : "transparent",
+        "&:hover": {
+          backgroundColor: "rgba(255, 255, 255, 0.12)",
+        },
+      }}
+    >
+      {opt.label}
+    </Button>
+  );
+})}
             </>
           )}
         </Toolbar>

@@ -14,12 +14,12 @@ import { getGenres } from "../../api/tmdb-api";
 import { useQuery } from '@tanstack/react-query';
 import Spinner from '../spinner';
 
-const formControl = 
-  {
-    margin: 1,
-    minWidth: "90%",
-    backgroundColor: "rgb(255, 255, 255)"
-  };
+const formControl = {
+  margin: "12px 8px",
+  minWidth: "90%",
+  backgroundColor: "#ffffff",
+  borderRadius: 1,
+};
 
 export default function FilterMoviesCard(props) {
 
@@ -60,13 +60,19 @@ const handleSortChange = (e) => {
   return (
     <Card 
       sx={{
-        backgroundColor: "rgb(204, 204, 0)"
+        backgroundColor: "#1e1e2f",
+        color: "#ffffff",
+        borderRadius: 3,
+        border: "1px solid #383850",
+        boxShadow: "0 4px 16px rgba(0, 0, 0, 0.15)"
       }} 
       variant="outlined">
       <CardContent>
-        <Typography variant="h5" component="h1">
-          <SearchIcon fontSize="large" />
-          Filter the movies.
+        <Typography variant="h6"
+        sx={{ marginBottom: 2, fontWeight: "bold" }}
+        >
+          <SearchIcon sx={{ verticalAlign: "middle", marginRight: 1 }} />
+          Find Movies
         </Typography>
         <TextField
           sx={{...formControl}}
@@ -78,7 +84,20 @@ const handleSortChange = (e) => {
           onChange={handleTextChange}
         />
         <FormControl sx={{...formControl}}>
-          <InputLabel id="genre-label">Genre</InputLabel>
+          <InputLabel
+  id="genre-label"
+  shrink
+  sx={{
+    color: "#ffffff",
+    backgroundColor: "#1e1e2f",
+    paddingX: 0.5,
+    "&.Mui-focused": {
+      color: "#ffffff",
+    },
+  }}
+>
+  Genre
+</InputLabel>
           <Select
             labelId="genre-label"
             id="genre-select"
@@ -97,7 +116,20 @@ const handleSortChange = (e) => {
         </FormControl>
 
         <FormControl sx={{ ...formControl }}>
-          <InputLabel id="sort-label">Sort By</InputLabel>
+          <InputLabel
+  id="sort-label"
+  shrink
+  sx={{
+    color: "#ffffff",
+    backgroundColor: "#1e1e2f",
+    paddingX: 0.5,
+    "&.Mui-focused": {
+      color: "#ffffff",
+    },
+  }}
+>
+  Sort By
+</InputLabel>
           <Select
           labelId="sort-label"
           id="sort-select"
@@ -111,18 +143,6 @@ const handleSortChange = (e) => {
             <MenuItem value="title">Title (A-Z)</MenuItem>
           </Select>
         </FormControl>
-      </CardContent>
-      <CardMedia
-        sx={{ height: 300 }}
-        image={img}
-        title="Filter"
-      />
-      <CardContent>
-        <Typography variant="h5" component="h1">
-          <SearchIcon fontSize="large" />
-          Filter the movies.
-          <br />
-        </Typography>
       </CardContent>
     </Card>
   );
