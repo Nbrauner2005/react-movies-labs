@@ -3,6 +3,7 @@ import Header from "../headerMovieList";
 import FilterCard from "../filterMoviesCard";
 import MovieList from "../movieList";
 import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
 
 function MovieListPageTemplate({ movies, title, action }) {
   const [nameFilter, setNameFilter] = useState("");
@@ -66,10 +67,18 @@ function MovieListPageTemplate({ movies, title, action }) {
           />
         </Grid>
 
-        <MovieList
-          action={action}
-          movies={displayedMovies}
+        {displayedMovies.length === 0 ? (
+          <Grid size={12} sx={{ textAlign: "center", padding: 4 }}>
+            <Typography variant="h6" color="text.secondary">
+               No movies found. Try changing your search or filters.
+           </Typography>
+         </Grid>
+      ) : (
+         <MovieList
+            action={action}
+            movies={displayedMovies}
         />
+       )}
       </Grid>
     </Grid>
   );

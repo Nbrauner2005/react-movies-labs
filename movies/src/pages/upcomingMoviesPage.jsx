@@ -1,21 +1,29 @@
-import React, { useState, useEffect } from "react";
+
+import React from "react";
+import { useQuery } from "@tanstack/react-query";
 import PageTemplate from "../components/templateMovieListPage";
 import { getUpcomingMovies } from "../api/tmdb-api";
 import PlaylistAdd from "../components/cardIcons/playlistAdd";
+import Spinner from "../components/spinner";
 
 const UpcomingMoviesPage = () => {
-  const [movies, setMovies] = useState([]);
+  const { data, error, isPending, isError } = useQuery({
+    queryKey: ["upcomingMovies"],
+    queryFn: getUpcomingMovies,
+  });
 
-  useEffect(() => {
-    getUpcomingMovies().then((movies) => {
-      setMovies(movies);
-    });
-  }, []);
+  if (isPending) {
+    return <Spinner />;
+  }
+
+  if (isError) {
+    return <h1>{error.message}</h1>;
+  }
 
   return (
     <PageTemplate
       title="Upcoming Movies"
-      movies={movies}
+      movies={data}
       action={(movie) => {
         return <PlaylistAdd movie={movie} />;
       }}
