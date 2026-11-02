@@ -5,6 +5,7 @@ import Spinner from "../spinner";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
+import { Link } from "react-router";
 
 const MovieCredits = ({ movieId }) => {
     const { data, error, isPending, isError } = useQuery({
@@ -39,7 +40,11 @@ const MovieCredits = ({ movieId }) => {
                 size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }}
                 sx={{ padding: "10px" }}
                 >
-                  <Paper sx={{ padding: 2, textAlign: "center" }}>
+                <Link
+                  to={`/actors/${actor.id}`}
+                  style={{ textDecoration: "none", color: "inherit" }}
+                  >
+                  <Paper sx={{ padding: 2, textAlign: "center" }}> 
                     {actor.profile_path ? (
                         <img
                         src={`https://image.tmdb.org/t/p/w200${actor.profile_path}`}
@@ -71,6 +76,7 @@ const MovieCredits = ({ movieId }) => {
                         {actor.character}
                     </Typography>
                   </Paper>
+                  </Link>
                   </Grid>
             ))}
           </Grid>
