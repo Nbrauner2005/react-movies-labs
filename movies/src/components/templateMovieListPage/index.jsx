@@ -6,21 +6,25 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 function MovieListPageTemplate({ movies, title, action }) {
+  // Stores the user's movie search, genre filter and sorting preferences.
   const [nameFilter, setNameFilter] = useState("");
   const [genreFilter, setGenreFilter] = useState("0");
   const [sortOption, setSortOption] = useState("default")
   const genreId = Number(genreFilter);
 
+  // Filters movies by title, ignoring uppercase and lowercase differences.
   let displayedMovies = movies
     .filter((m) => {
       return (
         m.title.toLowerCase().search(nameFilter.toLowerCase()) !== -1
       );
     })
+    // Filters by the selected genre, or shows all genres when none is selected
     .filter((m) => {
       return genreId > 0 ? m.genre_ids.includes(genreId) : true;
     });
 
+    // Sorts the filtered movies by rating, release date or alphabetical order.
     displayedMovies = [...displayedMovies].sort((a, b) => {
       if (sortOption === "rating") {
         return b.vote_average - a.vote_average;
@@ -37,6 +41,7 @@ function MovieListPageTemplate({ movies, title, action }) {
       return 0;
     });
 
+    // Updates the relevent filter or sorting option when the user makes a selection.
   const handleChange = (type, value) => {
     if (type === "name") {
       setNameFilter(value);

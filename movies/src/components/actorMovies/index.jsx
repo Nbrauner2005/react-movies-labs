@@ -8,6 +8,7 @@ import Paper from "@mui/material/Paper";
 import { Link } from "react-router";
 
 const ActorMovies = ({ actorId }) => {
+    // Fetches and caches the selected actor's movie credits from TMDB.
     const { data, error, isPending, isError } = useQuery({
         queryKey: ["actorMovies", { id: actorId }],
         queryFn: getActorMovies,
@@ -23,6 +24,7 @@ const ActorMovies = ({ actorId }) => {
 
     const movies = data.cast;
 
+    // Displays a message if the actor has no available movie credits.
     if (!movies || movies.length === 0) {
         return <p>No movie information available.</p>;
     }
@@ -32,7 +34,7 @@ const ActorMovies = ({ actorId }) => {
           <Typography variant="h5" component="h3" sx={{ marginBottom: 2 }}>
             Filmography
           </Typography>
-
+{/* Displays up to 12 movies from the actor's filmography. */}
           <Grid container>
             {movies.slice(0, 12).map((movie) => (
                 <Grid
@@ -40,6 +42,7 @@ const ActorMovies = ({ actorId }) => {
                 size={{ xs: 12, sm: 6, md: 4, lg: 3, xl: 2 }}
                 sx={{ padding: "10px" }}
                 >
+            {/* Links each filmography card to its corresponding movie details page. */}
                 <Link
                   to={`/movies/${movie.id}`}
                   style={{ textDecoration: "none", color: "inherit" }}

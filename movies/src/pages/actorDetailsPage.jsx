@@ -6,8 +6,10 @@ import Spinner from '../components/spinner'
 import { Box, Typography, Paper } from "@mui/material";
 import ActorMovies from "../components/actorMovies";
 const ActorPage = () => {
+    // Gets the selected actor's ID from the URL.
     const { id } = useParams();
 
+    // Fetches and caches the selected actor's profile information from TMDB.
     const {
         data: actor,
         error,
@@ -69,7 +71,7 @@ const ActorPage = () => {
                     </Box>
                 </Box>
             </Paper>
-
+{/* Displays the selected actor's filmography below their profile. */}
             <Box sx={{ marginTop: 4 }}>
                 <ActorMovies actorId={id} />
             </Box>

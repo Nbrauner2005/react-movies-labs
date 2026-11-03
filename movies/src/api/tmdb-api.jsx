@@ -1,8 +1,10 @@
+// Fetches movies from TMDB using the current page number for pagination.
 export const getMovies = ({ queryKey }) => {
   const [, page] = queryKey;
   return fetch(
     `https://api.themoviedb.org/3/discover/movie?api_key=${import.meta.env.VITE_TMDB_KEY}&language=en-US&include_adult=false&include_video=false&page=${page}`
   ).then((response) => {
+    // Checks for an unseuccessful API response and displays the TMDB error message.
     if (!response.ok) {
       return response.json().then((error) => {
         throw new Error(error.status_message || "Something went wrong");
@@ -16,7 +18,6 @@ export const getMovies = ({ queryKey }) => {
 };
 
 export const getMovie = (args) => {
-  //console.log(args)
   const [, idPart] = args.queryKey;
   const { id } = idPart;
   return fetch(
@@ -152,6 +153,7 @@ export const getNowPlayingMovies = () => {
   });
 };
 
+// Retrieves recommended movies based on the selected movie's ID.
 export const getMovieRecommendations = ({ queryKey }) => {
   const [, idPart] = queryKey;
   const { id } = idPart;
@@ -171,6 +173,7 @@ export const getMovieRecommendations = ({ queryKey }) => {
   });
 };
 
+// Retrieves the cast and crew information for a selected movie.
 export const getMovieCredits = ({ queryKey }) => {
   const [, idPart] = queryKey;
   const { id } = idPart;
@@ -190,6 +193,7 @@ export const getMovieCredits = ({ queryKey }) => {
   });
 };
 
+// Retrieves an actor's profile information using their TMDB person ID.
 export const getActorDetails = ({ queryKey }) => {
   const [, idPart] = queryKey;
   const { id } = idPart;
@@ -209,6 +213,7 @@ export const getActorDetails = ({ queryKey }) => {
   });
 };
 
+// Retrieves an actor's movie credits to display their filmography.
 export const getActorMovies = ({ queryKey }) => {
   const [, idPart] = queryKey;
   const { id } = idPart;

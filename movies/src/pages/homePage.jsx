@@ -7,8 +7,10 @@ import { useState } from "react";
 import { Button, Box, Typography } from "@mui/material";
 const HomePage = (props) => {
 
+  // Tracks the current page of movies, starting at page 1.
   const [page, setPage] = useState(1);
 
+  // Fetches movies from TMDB and caches each page seperately using the query key.
   const { data, error, isPending, isError } = useQuery({
     queryKey: ['discover', page],
     queryFn: getMovies,
@@ -24,11 +26,6 @@ const HomePage = (props) => {
 
   const movies = data.results;
 
-  const favorites = movies.filter(m => m.favorite)
-  localStorage.setItem('favorites', JSON.stringify(favorites))
-  const addToFavorites = (movieId) => true
-
- 
 return (
   <>
     <PageTemplate
@@ -39,6 +36,7 @@ return (
       }}
     />
 
+{/* Allows users to navigate between pages of TMDB movie results. */}
     <Box
       sx={{
         display: "flex",
